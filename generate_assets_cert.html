@@ -1,0 +1,1723 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Certificate Asset Generator - Perfect Alignment Edition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&family=Cinzel:wght@600;700;800&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background: #1f0407;
+            color: white;
+        }
+        canvas {
+            border: 2px solid #FFBF00;
+            margin: 10px;
+            background: #FFFDF5;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div style="position:absolute; left:-9999px; top:-9999px; visibility:hidden;">
+        <span style="font-family:'Khand'; font-weight:500;">Khand 500</span>
+        <span style="font-family:'Khand'; font-weight:600;">Khand 600</span>
+        <span style="font-family:'Khand'; font-weight:700;">Khand 700</span>
+        <span style="font-family:'Cinzel'; font-weight:700;">Cinzel 700</span>
+    </div>
+    <h2>Generating Perfectly Aligned Certificate Assets...</h2>
+    <div id="status">Loading fonts...</div>
+    <div id="canvases"></div>
+
+    <script>
+        async function run() {
+            const status = document.getElementById('status');
+            await document.fonts.ready;
+            await Promise.all([
+                document.fonts.load('500 40px Khand'),
+                document.fonts.load('600 40px Khand'),
+                document.fonts.load('700 40px Khand'),
+                document.fonts.load('700 24px Khand'),
+                document.fonts.load('700 25px Khand'),
+                document.fonts.load('700 20px Cinzel')
+            ]);
+
+            status.innerText = 'Fonts loaded! Loading parchment texture pattern...';
+            const parchmentTileImg = new Image();
+            parchmentTileImg.crossOrigin = 'anonymous';
+            await new Promise((resolve) => {
+                parchmentTileImg.onload = resolve;
+                parchmentTileImg.onerror = resolve;
+                parchmentTileImg.src = 'https://res.cloudinary.com/mtvyoxua/image/upload/v1789413522/parchment_warm_tile.png';
+            });
+
+            status.innerText = 'Textures loaded! Rendering assets with perfect grid alignment...';
+            const results = {};
+
+            // ── ASSET 1: 3-Row Certificate Details Card (1040 x 300) ──
+            {
+                const W = 1040;
+                const H = 300;
+                const canvas = document.createElement('canvas');
+                canvas.width = W;
+                canvas.height = H;
+                const ctx = canvas.getContext('2d');
+
+                ctx.clearRect(0, 0, W, H);
+
+                const r = 24;
+                function drawCardPath(inset = 0) {
+                    const curR = Math.max(2, r - inset);
+                    ctx.beginPath();
+                    ctx.moveTo(inset + curR, inset);
+                    ctx.lineTo(W - inset - curR, inset);
+                    ctx.quadraticCurveTo(W - inset, inset, W - inset, inset + curR);
+                    ctx.lineTo(W - inset, H - inset - curR);
+                    ctx.quadraticCurveTo(W - inset, H - inset, W - inset - curR, H - inset);
+                    ctx.lineTo(inset + curR, H - inset);
+                    ctx.quadraticCurveTo(inset, H - inset, inset, H - inset - curR);
+                    ctx.lineTo(inset, inset + curR);
+                    ctx.quadraticCurveTo(inset, inset, inset + curR, inset);
+                    ctx.closePath();
+                }
+
+                drawCardPath(0);
+                const parchmentGrad = ctx.createLinearGradient(0, 0, W, H);
+                parchmentGrad.addColorStop(0, '#FFFBF2');
+                parchmentGrad.addColorStop(0.35, '#FFF6E3');
+                parchmentGrad.addColorStop(0.7, '#FFF0CD');
+                parchmentGrad.addColorStop(1, '#FFE9BE');
+                ctx.fillStyle = parchmentGrad;
+                ctx.fill();
+
+                ctx.save();
+                drawCardPath(0);
+                ctx.clip();
+
+                const centerGlow = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, W/1.3);
+                centerGlow.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+                centerGlow.addColorStop(0.6, 'rgba(255, 220, 140, 0.15)');
+                centerGlow.addColorStop(1, 'rgba(180, 120, 40, 0.08)');
+                ctx.fillStyle = centerGlow;
+                ctx.fillRect(0, 0, W, H);
+
+                ctx.strokeStyle = 'rgba(212, 175, 55, 0.06)';
+                ctx.lineWidth = 1;
+                for (let d = -H; d < W + H; d += 10) {
+                    ctx.beginPath();
+                    ctx.moveTo(d, 0);
+                    ctx.lineTo(d + H, H);
+                    ctx.stroke();
+                }
+
+                // Exactly 35% of 1040 = 364px
+                const colWidth = 364;
+                const leftShade = ctx.createLinearGradient(0, 0, colWidth, 0);
+                leftShade.addColorStop(0, 'rgba(138, 6, 24, 0.08)');
+                leftShade.addColorStop(0.85, 'rgba(138, 6, 24, 0.03)');
+                leftShade.addColorStop(1, 'rgba(138, 6, 24, 0.0)');
+                ctx.fillStyle = leftShade;
+                ctx.fillRect(0, 0, colWidth, H);
+
+                // Vertical Divider Line
+                ctx.strokeStyle = 'rgba(212, 160, 23, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(colWidth, 16);
+                ctx.lineTo(colWidth, H - 16);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.35)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(colWidth + 3, 20);
+                ctx.lineTo(colWidth + 3, H - 20);
+                ctx.stroke();
+
+                // Diamond Gem Medallions at row intersections
+                function drawDiamond(x, y, size, color) {
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y - size);
+                    ctx.lineTo(x + size, y);
+                    ctx.lineTo(x, y + size);
+                    ctx.lineTo(x - size, y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                drawDiamond(colWidth + 1.5, 20, 4, '#B10822');
+                drawDiamond(colWidth + 1.5, 100, 5, '#D4AF37'); // Intersection of row 1 & 2
+                drawDiamond(colWidth + 1.5, 100, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 200, 5, '#D4AF37'); // Intersection of row 2 & 3
+                drawDiamond(colWidth + 1.5, 200, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 280, 4, '#B10822');
+
+                // Horizontal Row Dividers at Y=100 and Y=200
+                const rowDividers = [100, 200];
+                rowDividers.forEach(divY => {
+                    const rowGrad = ctx.createLinearGradient(20, divY, W - 20, divY);
+                    rowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.1)');
+                    rowGrad.addColorStop(0.15, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(0.33, 'rgba(212, 175, 55, 0.5)');
+                    rowGrad.addColorStop(0.7, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(1, 'rgba(212, 175, 55, 0.1)');
+                    
+                    ctx.strokeStyle = rowGrad;
+                    ctx.lineWidth = 1.2;
+                    ctx.setLineDash([8, 6]);
+                    ctx.beginPath();
+                    ctx.moveTo(24, divY);
+                    ctx.lineTo(W - 24, divY);
+                    ctx.stroke();
+                });
+                ctx.setLineDash([]);
+
+                drawCardPath(2);
+                ctx.strokeStyle = '#D4AF37';
+                ctx.lineWidth = 3.5;
+                ctx.stroke();
+
+                drawCardPath(7);
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(255, 191, 0, 0.8)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(14, 14, W - 28, H - 28);
+
+                function drawCornerBracket(x, y, flipX, flipY) {
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+
+                    ctx.strokeStyle = '#B10822';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(24, 10);
+                    ctx.lineTo(10, 10);
+                    ctx.lineTo(10, 24);
+                    ctx.stroke();
+
+                    drawDiamond(10, 10, 4, '#FFBF00');
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.beginPath();
+                    ctx.arc(20, 20, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.restore();
+                }
+
+                drawCornerBracket(0, 0, false, false);
+                drawCornerBracket(W, 0, true, false);
+                drawCornerBracket(0, H, false, true);
+                drawCornerBracket(W, H, true, true);
+
+                // Precise optical centering for 3 rows (Y = 57, 157, 257 to align with HTML line-height)
+                const rows = [
+                    { label: "EVENT", y: 57 },
+                    { label: "CERTIFICATE TYPE", y: 157 },
+                    { label: "CERTIFICATE ID", y: 257 }
+                ];
+
+                rows.forEach(r => {
+                    ctx.font = '700 18px "Khand", sans-serif';
+                    ctx.fillStyle = '#D48806';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText("✦", 32, r.y - 1);
+
+                    ctx.font = '700 24px "Khand", "Cinzel", sans-serif';
+                    ctx.letterSpacing = '2px';
+                    
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.fillText(r.label, 58, r.y + 1);
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.fillText(r.label, 57, r.y);
+                });
+
+                ctx.restore();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_cert_details_card.png'] = canvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 1.5: 4-Row Winner Certificate Details Card (1040 x 400) ──
+            {
+                const W = 1040;
+                const H = 400;
+                const canvas = document.createElement('canvas');
+                canvas.width = W;
+                canvas.height = H;
+                const ctx = canvas.getContext('2d');
+
+                ctx.clearRect(0, 0, W, H);
+
+                const r = 24;
+                function drawCardPath(inset = 0) {
+                    const curR = Math.max(2, r - inset);
+                    ctx.beginPath();
+                    ctx.moveTo(inset + curR, inset);
+                    ctx.lineTo(W - inset - curR, inset);
+                    ctx.quadraticCurveTo(W - inset, inset, W - inset, inset + curR);
+                    ctx.lineTo(W - inset, H - inset - curR);
+                    ctx.quadraticCurveTo(W - inset, H - inset, W - inset - curR, H - inset);
+                    ctx.lineTo(inset + curR, H - inset);
+                    ctx.quadraticCurveTo(inset, H - inset, inset, H - inset - curR);
+                    ctx.lineTo(inset, inset + curR);
+                    ctx.quadraticCurveTo(inset, inset, inset + curR, inset);
+                    ctx.closePath();
+                }
+
+                drawCardPath(0);
+                const parchmentGrad = ctx.createLinearGradient(0, 0, W, H);
+                parchmentGrad.addColorStop(0, '#FFFBF2');
+                parchmentGrad.addColorStop(0.35, '#FFF6E3');
+                parchmentGrad.addColorStop(0.7, '#FFF0CD');
+                parchmentGrad.addColorStop(1, '#FFE9BE');
+                ctx.fillStyle = parchmentGrad;
+                ctx.fill();
+
+                ctx.save();
+                drawCardPath(0);
+                ctx.clip();
+
+                const centerGlow = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, W/1.3);
+                centerGlow.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+                centerGlow.addColorStop(0.6, 'rgba(255, 220, 140, 0.15)');
+                centerGlow.addColorStop(1, 'rgba(180, 120, 40, 0.08)');
+                ctx.fillStyle = centerGlow;
+                ctx.fillRect(0, 0, W, H);
+
+                ctx.strokeStyle = 'rgba(212, 175, 55, 0.06)';
+                ctx.lineWidth = 1;
+                for (let d = -H; d < W + H; d += 10) {
+                    ctx.beginPath();
+                    ctx.moveTo(d, 0);
+                    ctx.lineTo(d + H, H);
+                    ctx.stroke();
+                }
+
+                // Exactly 35% of 1040 = 364px
+                const colWidth = 364;
+                const leftShade = ctx.createLinearGradient(0, 0, colWidth, 0);
+                leftShade.addColorStop(0, 'rgba(138, 6, 24, 0.08)');
+                leftShade.addColorStop(0.85, 'rgba(138, 6, 24, 0.03)');
+                leftShade.addColorStop(1, 'rgba(138, 6, 24, 0.0)');
+                ctx.fillStyle = leftShade;
+                ctx.fillRect(0, 0, colWidth, H);
+
+                // Vertical Divider Line
+                ctx.strokeStyle = 'rgba(212, 160, 23, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(colWidth, 16);
+                ctx.lineTo(colWidth, H - 16);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.35)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(colWidth + 3, 20);
+                ctx.lineTo(colWidth + 3, H - 20);
+                ctx.stroke();
+
+                // Diamond Gem Medallions at row intersections
+                function drawDiamond(x, y, size, color) {
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y - size);
+                    ctx.lineTo(x + size, y);
+                    ctx.lineTo(x, y + size);
+                    ctx.lineTo(x - size, y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                drawDiamond(colWidth + 1.5, 20, 4, '#B10822');
+                drawDiamond(colWidth + 1.5, 100, 5, '#D4AF37'); // Intersection of row 1 & 2
+                drawDiamond(colWidth + 1.5, 100, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 200, 5, '#D4AF37'); // Intersection of row 2 & 3
+                drawDiamond(colWidth + 1.5, 200, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 300, 5, '#D4AF37'); // Intersection of row 3 & 4
+                drawDiamond(colWidth + 1.5, 300, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 380, 4, '#B10822');
+
+                // Horizontal Row Dividers at Y=100, Y=200, Y=300
+                const rowDividers = [100, 200, 300];
+                rowDividers.forEach(divY => {
+                    const rowGrad = ctx.createLinearGradient(20, divY, W - 20, divY);
+                    rowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.1)');
+                    rowGrad.addColorStop(0.15, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(0.33, 'rgba(212, 175, 55, 0.5)');
+                    rowGrad.addColorStop(0.7, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(1, 'rgba(212, 175, 55, 0.1)');
+                    
+                    ctx.strokeStyle = rowGrad;
+                    ctx.lineWidth = 1.2;
+                    ctx.setLineDash([8, 6]);
+                    ctx.beginPath();
+                    ctx.moveTo(24, divY);
+                    ctx.lineTo(W - 24, divY);
+                    ctx.stroke();
+                });
+                ctx.setLineDash([]);
+
+                drawCardPath(2);
+                ctx.strokeStyle = '#D4AF37';
+                ctx.lineWidth = 3.5;
+                ctx.stroke();
+
+                drawCardPath(7);
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(255, 191, 0, 0.8)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(14, 14, W - 28, H - 28);
+
+                function drawCornerBracket(x, y, flipX, flipY) {
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+
+                    ctx.strokeStyle = '#B10822';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(24, 10);
+                    ctx.lineTo(10, 10);
+                    ctx.lineTo(10, 24);
+                    ctx.stroke();
+
+                    drawDiamond(10, 10, 4, '#FFBF00');
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.beginPath();
+                    ctx.arc(20, 20, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.restore();
+                }
+
+                drawCornerBracket(0, 0, false, false);
+                drawCornerBracket(W, 0, true, false);
+                drawCornerBracket(0, H, false, true);
+                drawCornerBracket(W, H, true, true);
+
+                // Precise optical centering for 4 rows (Y = 57, 157, 257, 357 to align with HTML line-height)
+                const rows = [
+                    { label: "EVENT", y: 57 },
+                    { label: "POSITION", y: 157 },
+                    { label: "WINNING PRIZE", y: 257 },
+                    { label: "CERTIFICATE ID", y: 357 }
+                ];
+
+                rows.forEach(r => {
+                    ctx.font = '700 18px "Khand", sans-serif';
+                    ctx.fillStyle = '#D48806';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText("✦", 32, r.y - 1);
+
+                    ctx.font = '700 24px "Khand", "Cinzel", sans-serif';
+                    ctx.letterSpacing = '2px';
+                    
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.fillText(r.label, 58, r.y + 1);
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.fillText(r.label, 57, r.y);
+                });
+
+                ctx.restore();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_cert_details_winner_card.png'] = canvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 1b: 2-Row Guest Certificate Details Card (1040 x 200) ──
+            {
+                const W = 1040;
+                const H = 200;
+                const canvas = document.createElement('canvas');
+                canvas.width = W;
+                canvas.height = H;
+                const ctx = canvas.getContext('2d');
+
+                ctx.clearRect(0, 0, W, H);
+
+                const r = 24;
+                function drawCardPath(inset = 0) {
+                    const curR = Math.max(2, r - inset);
+                    ctx.beginPath();
+                    ctx.moveTo(inset + curR, inset);
+                    ctx.lineTo(W - inset - curR, inset);
+                    ctx.quadraticCurveTo(W - inset, inset, W - inset, inset + curR);
+                    ctx.lineTo(W - inset, H - inset - curR);
+                    ctx.quadraticCurveTo(W - inset, H - inset, W - inset - curR, H - inset);
+                    ctx.lineTo(inset + curR, H - inset);
+                    ctx.quadraticCurveTo(inset, H - inset, inset, H - inset - curR);
+                    ctx.lineTo(inset, inset + curR);
+                    ctx.quadraticCurveTo(inset, inset, inset + curR, inset);
+                    ctx.closePath();
+                }
+
+                drawCardPath(0);
+                const parchmentGrad = ctx.createLinearGradient(0, 0, W, H);
+                parchmentGrad.addColorStop(0, '#FFFBF2');
+                parchmentGrad.addColorStop(0.35, '#FFF6E3');
+                parchmentGrad.addColorStop(0.7, '#FFF0CD');
+                parchmentGrad.addColorStop(1, '#FFE9BE');
+                ctx.fillStyle = parchmentGrad;
+                ctx.fill();
+
+                ctx.save();
+                drawCardPath(0);
+                ctx.clip();
+
+                const centerGlow = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, W/1.3);
+                centerGlow.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+                centerGlow.addColorStop(0.6, 'rgba(255, 220, 140, 0.15)');
+                centerGlow.addColorStop(1, 'rgba(180, 120, 40, 0.08)');
+                ctx.fillStyle = centerGlow;
+                ctx.fillRect(0, 0, W, H);
+
+                ctx.strokeStyle = 'rgba(212, 175, 55, 0.06)';
+                ctx.lineWidth = 1;
+                for (let d = -H; d < W + H; d += 10) {
+                    ctx.beginPath();
+                    ctx.moveTo(d, 0);
+                    ctx.lineTo(d + H, H);
+                    ctx.stroke();
+                }
+
+                // Exactly 35% of 1040 = 364px
+                const colWidth = 364;
+                const leftShade = ctx.createLinearGradient(0, 0, colWidth, 0);
+                leftShade.addColorStop(0, 'rgba(138, 6, 24, 0.08)');
+                leftShade.addColorStop(0.85, 'rgba(138, 6, 24, 0.03)');
+                leftShade.addColorStop(1, 'rgba(138, 6, 24, 0.0)');
+                ctx.fillStyle = leftShade;
+                ctx.fillRect(0, 0, colWidth, H);
+
+                // Vertical Divider Line
+                ctx.strokeStyle = 'rgba(212, 160, 23, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(colWidth, 16);
+                ctx.lineTo(colWidth, H - 16);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.35)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(colWidth + 3, 20);
+                ctx.lineTo(colWidth + 3, H - 20);
+                ctx.stroke();
+
+                // Diamond Gem Medallions at row intersections
+                function drawDiamond(x, y, size, color) {
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y - size);
+                    ctx.lineTo(x + size, y);
+                    ctx.lineTo(x, y + size);
+                    ctx.lineTo(x - size, y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                drawDiamond(colWidth + 1.5, 20, 4, '#B10822');
+                drawDiamond(colWidth + 1.5, 100, 5, '#D4AF37'); // Intersection of row 1 & 2
+                drawDiamond(colWidth + 1.5, 100, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 180, 4, '#B10822');
+
+                // Horizontal Row Divider at Y=100
+                const rowDividers = [100];
+                rowDividers.forEach(divY => {
+                    const rowGrad = ctx.createLinearGradient(20, divY, W - 20, divY);
+                    rowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.1)');
+                    rowGrad.addColorStop(0.15, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(0.33, 'rgba(212, 175, 55, 0.5)');
+                    rowGrad.addColorStop(0.7, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(1, 'rgba(212, 175, 55, 0.1)');
+                    
+                    ctx.strokeStyle = rowGrad;
+                    ctx.lineWidth = 1.2;
+                    ctx.setLineDash([8, 6]);
+                    ctx.beginPath();
+                    ctx.moveTo(24, divY);
+                    ctx.lineTo(W - 24, divY);
+                    ctx.stroke();
+                });
+                ctx.setLineDash([]);
+
+                drawCardPath(2);
+                ctx.strokeStyle = '#D4AF37';
+                ctx.lineWidth = 3.5;
+                ctx.stroke();
+
+                drawCardPath(7);
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(255, 191, 0, 0.8)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(14, 14, W - 28, H - 28);
+
+                function drawCornerBracket(x, y, flipX, flipY) {
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+
+                    ctx.strokeStyle = '#B10822';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(24, 10);
+                    ctx.lineTo(10, 10);
+                    ctx.lineTo(10, 24);
+                    ctx.stroke();
+
+                    drawDiamond(10, 10, 4, '#FFBF00');
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.beginPath();
+                    ctx.arc(20, 20, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.restore();
+                }
+
+                drawCornerBracket(0, 0, false, false);
+                drawCornerBracket(W, 0, true, false);
+                drawCornerBracket(0, H, false, true);
+                drawCornerBracket(W, H, true, true);
+
+                // Precise optical centering for 2 rows (Y = 57, 157 to align with HTML line-height)
+                const rows = [
+                    { label: "EVENT", y: 57 },
+                    { label: "CERTIFICATE ID", y: 157 }
+                ];
+
+                rows.forEach(r => {
+                    ctx.font = '700 18px "Khand", sans-serif';
+                    ctx.fillStyle = '#D48806';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText("✦", 32, r.y - 1);
+
+                    ctx.font = '700 24px "Khand", "Cinzel", sans-serif';
+                    ctx.letterSpacing = '2px';
+                    
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.fillText(r.label, 58, r.y + 1);
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.fillText(r.label, 57, r.y);
+                });
+
+                ctx.restore();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_cert_details_guest_card.png'] = canvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 1c: 3-Row Certificate Details Card (1040 x 300) ──
+            {
+                const W = 1040;
+                const H = 300;
+                const canvas = document.createElement('canvas');
+                canvas.width = W;
+                canvas.height = H;
+                const ctx = canvas.getContext('2d');
+
+                ctx.clearRect(0, 0, W, H);
+
+                const r = 24;
+                function drawCardPath(inset = 0) {
+                    const curR = Math.max(2, r - inset);
+                    ctx.beginPath();
+                    ctx.moveTo(inset + curR, inset);
+                    ctx.lineTo(W - inset - curR, inset);
+                    ctx.quadraticCurveTo(W - inset, inset, W - inset, inset + curR);
+                    ctx.lineTo(W - inset, H - inset - curR);
+                    ctx.quadraticCurveTo(W - inset, H - inset, W - inset - curR, H - inset);
+                    ctx.lineTo(inset + curR, H - inset);
+                    ctx.quadraticCurveTo(inset, H - inset, inset, H - inset - curR);
+                    ctx.lineTo(inset, inset + curR);
+                    ctx.quadraticCurveTo(inset, inset, inset + curR, inset);
+                    ctx.closePath();
+                }
+
+                drawCardPath(0);
+                const parchmentGrad = ctx.createLinearGradient(0, 0, W, H);
+                parchmentGrad.addColorStop(0, '#FFFBF2');
+                parchmentGrad.addColorStop(0.35, '#FFF6E3');
+                parchmentGrad.addColorStop(0.7, '#FFF0CD');
+                parchmentGrad.addColorStop(1, '#FFE9BE');
+                ctx.fillStyle = parchmentGrad;
+                ctx.fill();
+
+                ctx.save();
+                drawCardPath(0);
+                ctx.clip();
+
+                const centerGlow = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, W/1.3);
+                centerGlow.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+                centerGlow.addColorStop(0.6, 'rgba(255, 220, 140, 0.15)');
+                centerGlow.addColorStop(1, 'rgba(180, 120, 40, 0.08)');
+                ctx.fillStyle = centerGlow;
+                ctx.fillRect(0, 0, W, H);
+
+                ctx.strokeStyle = 'rgba(212, 175, 55, 0.06)';
+                ctx.lineWidth = 1;
+                for (let d = -H; d < W + H; d += 10) {
+                    ctx.beginPath();
+                    ctx.moveTo(d, 0);
+                    ctx.lineTo(d + H, H);
+                    ctx.stroke();
+                }
+
+                // Exactly 35% of 1040 = 364px
+                const colWidth = 364;
+                const leftShade = ctx.createLinearGradient(0, 0, colWidth, 0);
+                leftShade.addColorStop(0, 'rgba(138, 6, 24, 0.08)');
+                leftShade.addColorStop(0.85, 'rgba(138, 6, 24, 0.03)');
+                leftShade.addColorStop(1, 'rgba(138, 6, 24, 0.0)');
+                ctx.fillStyle = leftShade;
+                ctx.fillRect(0, 0, colWidth, H);
+
+                // Vertical Divider Line
+                ctx.strokeStyle = 'rgba(212, 160, 23, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(colWidth, 16);
+                ctx.lineTo(colWidth, H - 16);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.35)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(colWidth + 3, 20);
+                ctx.lineTo(colWidth + 3, H - 20);
+                ctx.stroke();
+
+                // Diamond Gem Medallions at row intersections
+                function drawDiamond(x, y, size, color) {
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y - size);
+                    ctx.lineTo(x + size, y);
+                    ctx.lineTo(x, y + size);
+                    ctx.lineTo(x - size, y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                drawDiamond(colWidth + 1.5, 20, 4, '#B10822');
+                drawDiamond(colWidth + 1.5, 100, 5, '#D4AF37'); // Intersection of row 1 & 2
+                drawDiamond(colWidth + 1.5, 100, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 200, 5, '#D4AF37'); // Intersection of row 2 & 3
+                drawDiamond(colWidth + 1.5, 200, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 280, 4, '#B10822');
+
+                // Horizontal Row Dividers at Y=100 and Y=200
+                const rowDividers = [100, 200];
+                rowDividers.forEach(divY => {
+                    const rowGrad = ctx.createLinearGradient(20, divY, W - 20, divY);
+                    rowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.1)');
+                    rowGrad.addColorStop(0.15, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(0.33, 'rgba(212, 175, 55, 0.5)');
+                    rowGrad.addColorStop(0.7, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(1, 'rgba(212, 175, 55, 0.1)');
+                    
+                    ctx.strokeStyle = rowGrad;
+                    ctx.lineWidth = 1.2;
+                    ctx.setLineDash([8, 6]);
+                    ctx.beginPath();
+                    ctx.moveTo(24, divY);
+                    ctx.lineTo(W - 24, divY);
+                    ctx.stroke();
+                });
+                ctx.setLineDash([]);
+
+                drawCardPath(2);
+                ctx.strokeStyle = '#D4AF37';
+                ctx.lineWidth = 3.5;
+                ctx.stroke();
+
+                drawCardPath(7);
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(255, 191, 0, 0.8)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(14, 14, W - 28, H - 28);
+
+                function drawCornerBracket(x, y, flipX, flipY) {
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+
+                    ctx.strokeStyle = '#B10822';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(24, 10);
+                    ctx.lineTo(10, 10);
+                    ctx.lineTo(10, 24);
+                    ctx.stroke();
+
+                    drawDiamond(10, 10, 4, '#FFBF00');
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.beginPath();
+                    ctx.arc(20, 20, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.restore();
+                }
+
+                drawCornerBracket(0, 0, false, false);
+                drawCornerBracket(W, 0, true, false);
+                drawCornerBracket(0, H, false, true);
+                drawCornerBracket(W, H, true, true);
+
+                // Precise optical centering for 3 rows (Y = 57, 157, 257 to align with HTML line-height)
+                const rows = [
+                    { label: "EVENT NAME", y: 57 },
+                    { label: "ROLE IN THE TEAM", y: 157 },
+                    { label: "CERTIFICATE ID", y: 257 }
+                ];
+
+                rows.forEach(r => {
+                    ctx.font = '700 18px "Khand", sans-serif';
+                    ctx.fillStyle = '#D48806';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText("✦", 32, r.y - 1);
+
+                    ctx.font = '700 24px "Khand", "Cinzel", sans-serif';
+                    ctx.letterSpacing = '2px';
+                    
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.fillText(r.label, 58, r.y + 1);
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.fillText(r.label, 57, r.y);
+                });
+
+                ctx.restore();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_cert_details_event_team_card.png'] = canvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 1d: 3-Row Certificate Details Card (1040 x 300) ──
+            {
+                const W = 1040;
+                const H = 300;
+                const canvas = document.createElement('canvas');
+                canvas.width = W;
+                canvas.height = H;
+                const ctx = canvas.getContext('2d');
+
+                ctx.clearRect(0, 0, W, H);
+
+                const r = 24;
+                function drawCardPath(inset = 0) {
+                    const curR = Math.max(2, r - inset);
+                    ctx.beginPath();
+                    ctx.moveTo(inset + curR, inset);
+                    ctx.lineTo(W - inset - curR, inset);
+                    ctx.quadraticCurveTo(W - inset, inset, W - inset, inset + curR);
+                    ctx.lineTo(W - inset, H - inset - curR);
+                    ctx.quadraticCurveTo(W - inset, H - inset, W - inset - curR, H - inset);
+                    ctx.lineTo(inset + curR, H - inset);
+                    ctx.quadraticCurveTo(inset, H - inset, inset, H - inset - curR);
+                    ctx.lineTo(inset, inset + curR);
+                    ctx.quadraticCurveTo(inset, inset, inset + curR, inset);
+                    ctx.closePath();
+                }
+
+                drawCardPath(0);
+                const parchmentGrad = ctx.createLinearGradient(0, 0, W, H);
+                parchmentGrad.addColorStop(0, '#FFFBF2');
+                parchmentGrad.addColorStop(0.35, '#FFF6E3');
+                parchmentGrad.addColorStop(0.7, '#FFF0CD');
+                parchmentGrad.addColorStop(1, '#FFE9BE');
+                ctx.fillStyle = parchmentGrad;
+                ctx.fill();
+
+                ctx.save();
+                drawCardPath(0);
+                ctx.clip();
+
+                const centerGlow = ctx.createRadialGradient(W/2, H/2, 20, W/2, H/2, W/1.3);
+                centerGlow.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+                centerGlow.addColorStop(0.6, 'rgba(255, 220, 140, 0.15)');
+                centerGlow.addColorStop(1, 'rgba(180, 120, 40, 0.08)');
+                ctx.fillStyle = centerGlow;
+                ctx.fillRect(0, 0, W, H);
+
+                ctx.strokeStyle = 'rgba(212, 175, 55, 0.06)';
+                ctx.lineWidth = 1;
+                for (let d = -H; d < W + H; d += 10) {
+                    ctx.beginPath();
+                    ctx.moveTo(d, 0);
+                    ctx.lineTo(d + H, H);
+                    ctx.stroke();
+                }
+
+                // Exactly 35% of 1040 = 364px
+                const colWidth = 364;
+                const leftShade = ctx.createLinearGradient(0, 0, colWidth, 0);
+                leftShade.addColorStop(0, 'rgba(138, 6, 24, 0.08)');
+                leftShade.addColorStop(0.85, 'rgba(138, 6, 24, 0.03)');
+                leftShade.addColorStop(1, 'rgba(138, 6, 24, 0.0)');
+                ctx.fillStyle = leftShade;
+                ctx.fillRect(0, 0, colWidth, H);
+
+                // Vertical Divider Line
+                ctx.strokeStyle = 'rgba(212, 160, 23, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(colWidth, 16);
+                ctx.lineTo(colWidth, H - 16);
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.35)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(colWidth + 3, 20);
+                ctx.lineTo(colWidth + 3, H - 20);
+                ctx.stroke();
+
+                // Diamond Gem Medallions at row intersections
+                function drawDiamond(x, y, size, color) {
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.moveTo(x, y - size);
+                    ctx.lineTo(x + size, y);
+                    ctx.lineTo(x, y + size);
+                    ctx.lineTo(x - size, y);
+                    ctx.closePath();
+                    ctx.fill();
+                }
+
+                drawDiamond(colWidth + 1.5, 20, 4, '#B10822');
+                drawDiamond(colWidth + 1.5, 100, 5, '#D4AF37'); // Intersection of row 1 & 2
+                drawDiamond(colWidth + 1.5, 100, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 200, 5, '#D4AF37'); // Intersection of row 2 & 3
+                drawDiamond(colWidth + 1.5, 200, 2.5, '#B10822');
+                drawDiamond(colWidth + 1.5, 280, 4, '#B10822');
+
+                // Horizontal Row Dividers at Y=100 and Y=200
+                const rowDividers = [100, 200];
+                rowDividers.forEach(divY => {
+                    const rowGrad = ctx.createLinearGradient(20, divY, W - 20, divY);
+                    rowGrad.addColorStop(0, 'rgba(212, 175, 55, 0.1)');
+                    rowGrad.addColorStop(0.15, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(0.33, 'rgba(212, 175, 55, 0.5)');
+                    rowGrad.addColorStop(0.7, 'rgba(177, 8, 34, 0.25)');
+                    rowGrad.addColorStop(1, 'rgba(212, 175, 55, 0.1)');
+                    
+                    ctx.strokeStyle = rowGrad;
+                    ctx.lineWidth = 1.2;
+                    ctx.setLineDash([8, 6]);
+                    ctx.beginPath();
+                    ctx.moveTo(24, divY);
+                    ctx.lineTo(W - 24, divY);
+                    ctx.stroke();
+                });
+                ctx.setLineDash([]);
+
+                drawCardPath(2);
+                ctx.strokeStyle = '#D4AF37';
+                ctx.lineWidth = 3.5;
+                ctx.stroke();
+
+                drawCardPath(7);
+                ctx.strokeStyle = 'rgba(138, 6, 24, 0.65)';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+                ctx.strokeStyle = 'rgba(255, 191, 0, 0.8)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(14, 14, W - 28, H - 28);
+
+                function drawCornerBracket(x, y, flipX, flipY) {
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.scale(flipX ? -1 : 1, flipY ? -1 : 1);
+
+                    ctx.strokeStyle = '#B10822';
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+                    ctx.moveTo(24, 10);
+                    ctx.lineTo(10, 10);
+                    ctx.lineTo(10, 24);
+                    ctx.stroke();
+
+                    drawDiamond(10, 10, 4, '#FFBF00');
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.beginPath();
+                    ctx.arc(20, 20, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.restore();
+                }
+
+                drawCornerBracket(0, 0, false, false);
+                drawCornerBracket(W, 0, true, false);
+                drawCornerBracket(0, H, false, true);
+                drawCornerBracket(W, H, true, true);
+
+                // Precise optical centering for 3 rows (Y = 57, 157, 257 to align with HTML line-height)
+                const rows = [
+                    { label: "DEPARTMENT ", y: 57 },
+                    { label: "POSITION", y: 157 },
+                    { label: "CERTIFICATE ID", y: 257 }
+                ];
+
+                rows.forEach(r => {
+                    ctx.font = '700 18px "Khand", sans-serif';
+                    ctx.fillStyle = '#D48806';
+                    ctx.textAlign = 'left';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText("✦", 32, r.y - 1);
+
+                    ctx.font = '700 24px "Khand", "Cinzel", sans-serif';
+                    ctx.letterSpacing = '2px';
+                    
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.fillText(r.label, 58, r.y + 1);
+
+                    ctx.fillStyle = '#8A0618';
+                    ctx.fillText(r.label, 57, r.y);
+                });
+
+                ctx.restore();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_cert_details_paradox_team_card.png'] = canvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 2: Wide Side-Wise Certificate Main Body Copy ──
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1080;
+                canvas.height = 600;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const startX = 8;
+                const maxWidth = 1064;
+                let y = 48;
+
+                let lastBaseline = y;
+                function renderRichParagraph(tokens, lineHeight) {
+                    let curX = startX;
+                    const spaceWidth = 10;
+
+                    const words = [];
+                    tokens.forEach(tok => {
+                        const rawWords = tok.text.split(' ');
+                        rawWords.forEach((w) => {
+                            if (w.length > 0) {
+                                words.push({
+                                    text: w,
+                                    color: tok.color || '#2a2a2a',
+                                    bold: !!tok.bold
+                                });
+                            }
+                        });
+                    });
+
+                    words.forEach(w => {
+                        ctx.font = (w.bold ? '700 ' : '500 ') + '40px "Khand", "Trebuchet MS", sans-serif';
+                        const wordWidth = ctx.measureText(w.text).width;
+
+                        if (curX + wordWidth > startX + maxWidth) {
+                            curX = startX;
+                            y += lineHeight;
+                        }
+
+                        ctx.fillStyle = w.color;
+                        ctx.fillText(w.text, curX, y);
+                        curX += wordWidth + spaceWidth;
+                        lastBaseline = y;
+                    });
+
+                    y += lineHeight;
+                }
+
+                const p1Tokens = [
+                    { text: "Thank you for being part of " },
+                    { text: "Saavan '26!", color: "#B10822", bold: true },
+                    { text: " It was truly wonderful to have you with us, bringing your energy, passion, and competitive spirit to make this edition an unforgettable celebration." }
+                ];
+                renderRichParagraph(p1Tokens, 56);
+
+                y += 24;
+
+                const p2Tokens = [
+                    { text: "Please find your certificate attached to this email. It's a small token of appreciation for showing up and giving it your all." }
+                ];
+                renderRichParagraph(p2Tokens, 56);
+
+                y += 24;
+
+                const p3Tokens = [
+                    { text: "If you have any suggestions or feedback for the event or department, please take a moment to fill out the form below." }
+                ];
+                renderRichParagraph(p3Tokens, 56);
+
+                const finalHeight = Math.ceil(lastBaseline + 14);
+                const trimmedCanvas = document.createElement('canvas');
+                trimmedCanvas.width = canvas.width;
+                trimmedCanvas.height = finalHeight;
+                const tCtx = trimmedCanvas.getContext('2d');
+                tCtx.drawImage(canvas, 0, 0);
+
+                document.getElementById('canvases').appendChild(trimmedCanvas);
+                results['saavan26_cert_body.png'] = trimmedCanvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 2b: Wide Side-Wise Certificate Main Body Copy ──
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1080;
+                canvas.height = 600;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const startX = 8;
+                const maxWidth = 1064;
+                let y = 48;
+
+                let lastBaseline = y;
+                function renderRichParagraph(tokens, lineHeight) {
+                    let curX = startX;
+                    const spaceWidth = 10;
+
+                    const words = [];
+                    tokens.forEach(tok => {
+                        const rawWords = tok.text.split(' ');
+                        rawWords.forEach((w) => {
+                            if (w.length > 0) {
+                                words.push({
+                                    text: w,
+                                    color: tok.color || '#2a2a2a',
+                                    bold: !!tok.bold
+                                });
+                            }
+                        });
+                    });
+
+                    words.forEach(w => {
+                        ctx.font = (w.bold ? '700 ' : '500 ') + '40px "Khand", "Trebuchet MS", sans-serif';
+                        const wordWidth = ctx.measureText(w.text).width;
+
+                        if (curX + wordWidth > startX + maxWidth) {
+                            curX = startX;
+                            y += lineHeight;
+                        }
+
+                        ctx.fillStyle = w.color;
+                        ctx.fillText(w.text, curX, y);
+                        curX += wordWidth + spaceWidth;
+                        lastBaseline = y;
+                    });
+
+                    y += lineHeight;
+                }
+
+                const p1Tokens = [
+                    { text: "Congratulations on your " },
+                    { text: "outstanding achievement ", color: "#B10822", bold: true },
+                    { text: "at " },
+                    { text: "Saavan '26!", color: "#B10822", bold: true },
+                    { text: " Your performance, dedication, and competitive spirit set a remarkable benchmark during the event." }
+                ];
+                renderRichParagraph(p1Tokens, 56);
+
+                y += 24;
+
+                const p2Tokens = [
+                    { text: "Please find your certificate attached to this email, honoring your victory and well-deserved success." }
+                ];
+                renderRichParagraph(p2Tokens, 56);
+
+                y += 24;
+
+                const p3Tokens = [
+                    { text: "If you have any suggestions or feedback for the event or department, please take a moment to fill out the form below." }
+                ];
+                renderRichParagraph(p3Tokens, 56);
+
+                const finalHeight = Math.ceil(lastBaseline + 14);
+                const trimmedCanvas = document.createElement('canvas');
+                trimmedCanvas.width = canvas.width;
+                trimmedCanvas.height = finalHeight;
+                const tCtx = trimmedCanvas.getContext('2d');
+                tCtx.drawImage(canvas, 0, 0);
+
+                document.getElementById('canvases').appendChild(trimmedCanvas);
+                results['saavan26_cert_winners_body.png'] = trimmedCanvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 2c: Wide Side-Wise Certificate Main Body Copy ──
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1080;
+                canvas.height = 750;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const startX = 8;
+                const maxWidth = 1064;
+                let y = 48;
+
+                let lastBaseline = y;
+                function renderRichParagraph(tokens, lineHeight) {
+                    let curX = startX;
+                    const spaceWidth = 10;
+
+                    const words = [];
+                    tokens.forEach(tok => {
+                        const rawWords = tok.text.split(' ');
+                        rawWords.forEach((w) => {
+                            if (w.length > 0) {
+                                words.push({
+                                    text: w,
+                                    color: tok.color || '#2a2a2a',
+                                    bold: !!tok.bold
+                                });
+                            }
+                        });
+                    });
+
+                    words.forEach(w => {
+                        ctx.font = (w.bold ? '700 ' : '500 ') + '40px "Khand", "Trebuchet MS", sans-serif';
+                        const wordWidth = ctx.measureText(w.text).width;
+
+                        if (curX + wordWidth > startX + maxWidth) {
+                            curX = startX;
+                            y += lineHeight;
+                        }
+
+                        ctx.fillStyle = w.color;
+                        ctx.fillText(w.text, curX, y);
+                        curX += wordWidth + spaceWidth;
+                        lastBaseline = y;
+                    });
+
+                    y += lineHeight;
+                }
+
+                const p1Tokens = [
+                    { text: "Thank you for gracing " },
+                    { text: "Saavan '26 ", color: "#B10822", bold: true },
+                    { text: "with your presence. Your participation added immense value to the event and left a lasting impression on everyone." }
+                ];
+                renderRichParagraph(p1Tokens, 56);
+
+                y += 24;
+
+                const p2Tokens = [
+                    { text: "Please find your certificate attached to this email. We hope it serves as a token of our gratitude for your contribution in making this event truly special." }
+                ];
+                renderRichParagraph(p2Tokens, 56);
+
+                const finalHeight = Math.ceil(lastBaseline + 14);
+                const trimmedCanvas = document.createElement('canvas');
+                trimmedCanvas.width = canvas.width;
+                trimmedCanvas.height = finalHeight;
+                const tCtx = trimmedCanvas.getContext('2d');
+                tCtx.drawImage(canvas, 0, 0);
+
+                document.getElementById('canvases').appendChild(trimmedCanvas);
+                results['saavan26_cert_guest_body.png'] = trimmedCanvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 2d: Wide Side-Wise Certificate Main Body Copy ──
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1080;
+                canvas.height = 600;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const startX = 8;
+                const maxWidth = 1064;
+                let y = 48;
+
+                let lastBaseline = y;
+                function renderRichParagraph(tokens, lineHeight) {
+                    let curX = startX;
+                    const spaceWidth = 10;
+
+                    const words = [];
+                    tokens.forEach(tok => {
+                        const rawWords = tok.text.split(' ');
+                        rawWords.forEach((w) => {
+                            if (w.length > 0) {
+                                words.push({
+                                    text: w,
+                                    color: tok.color || '#2a2a2a',
+                                    bold: !!tok.bold
+                                });
+                            }
+                        });
+                    });
+
+                    words.forEach(w => {
+                        ctx.font = (w.bold ? '700 ' : '500 ') + '40px "Khand", "Trebuchet MS", sans-serif';
+                        const wordWidth = ctx.measureText(w.text).width;
+
+                        if (curX + wordWidth > startX + maxWidth) {
+                            curX = startX;
+                            y += lineHeight;
+                        }
+
+                        ctx.fillStyle = w.color;
+                        ctx.fillText(w.text, curX, y);
+                        curX += wordWidth + spaceWidth;
+                        lastBaseline = y;
+                    });
+
+                    y += lineHeight;
+                }
+
+                const p1Tokens = [
+                    { text: "Thank you for being a part of the team that made " },
+                    { text: "Saavan '26 ", color: "#B10822", bold: true },
+                    { text: "happen! The fest would not have been what it was without your dedication, effort, and hard work behind the scenes." }
+                ];
+                renderRichParagraph(p1Tokens, 56);
+
+                y += 24;
+
+                const p2Tokens = [
+                    { text: "Please find your certificate attached to this email as a token of appreciation for your contribution in making this fest a truly memorable one." }
+                ];
+                renderRichParagraph(p2Tokens, 56);
+
+                y += 24;
+
+                const p3Tokens = [
+                    { text: "If you have any suggestions or feedback for the department, please take a moment to fill out the form below." }
+                ];
+                renderRichParagraph(p3Tokens, 56);
+
+                const finalHeight = Math.ceil(lastBaseline + 14);
+                const trimmedCanvas = document.createElement('canvas');
+                trimmedCanvas.width = canvas.width;
+                trimmedCanvas.height = finalHeight;
+                const tCtx = trimmedCanvas.getContext('2d');
+                tCtx.drawImage(canvas, 0, 0);
+
+                document.getElementById('canvases').appendChild(trimmedCanvas);
+                results['saavan26_cert_paradox_team_body.png'] = trimmedCanvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 2e: Wide Side-Wise Certificate Main Body Copy ──
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1080;
+                canvas.height = 600;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const startX = 8;
+                const maxWidth = 1064;
+                let y = 48;
+
+                let lastBaseline = y;
+                function renderRichParagraph(tokens, lineHeight) {
+                    let curX = startX;
+                    const spaceWidth = 10;
+
+                    const words = [];
+                    tokens.forEach(tok => {
+                        const rawWords = tok.text.split(' ');
+                        rawWords.forEach((w) => {
+                            if (w.length > 0) {
+                                words.push({
+                                    text: w,
+                                    color: tok.color || '#2a2a2a',
+                                    bold: !!tok.bold
+                                });
+                            }
+                        });
+                    });
+
+                    words.forEach(w => {
+                        ctx.font = (w.bold ? '700 ' : '500 ') + '40px "Khand", "Trebuchet MS", sans-serif';
+                        const wordWidth = ctx.measureText(w.text).width;
+
+                        if (curX + wordWidth > startX + maxWidth) {
+                            curX = startX;
+                            y += lineHeight;
+                        }
+
+                        ctx.fillStyle = w.color;
+                        ctx.fillText(w.text, curX, y);
+                        curX += wordWidth + spaceWidth;
+                        lastBaseline = y;
+                    });
+
+                    y += lineHeight;
+                }
+
+                const p1Tokens = [
+                    { text: "Thank you for being a part of the team that made " },
+                    { text: "Saavan '26 ", color: "#B10822", bold: true },
+                    { text: "a success! The smooth conduction and management of the event would not have been possible without your dedication, effort, and hard work." }
+                ];
+                renderRichParagraph(p1Tokens, 56);
+
+                y += 24;
+
+                const p2Tokens = [
+                    { text: "Please find your certificate attached to this email as a token of appreciation for your contribution in making the fest a memorable one." }
+                ];
+                renderRichParagraph(p2Tokens, 56);
+
+                y += 24;
+
+                const p3Tokens = [
+                    { text: "If you have any suggestions or feedback for the department, please take a moment to fill out the form below." }
+                ];
+                renderRichParagraph(p3Tokens, 56);
+
+                const finalHeight = Math.ceil(lastBaseline + 14);
+                const trimmedCanvas = document.createElement('canvas');
+                trimmedCanvas.width = canvas.width;
+                trimmedCanvas.height = finalHeight;
+                const tCtx = trimmedCanvas.getContext('2d');
+                tCtx.drawImage(canvas, 0, 0);
+
+                document.getElementById('canvases').appendChild(trimmedCanvas);
+                results['saavan26_cert_event_team_body.png'] = trimmedCanvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 3: Wide Side-Wise Closing Paragraph (Guest) ──
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1080;
+                canvas.height = 240;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const startX = 8;
+                const maxWidth = 1064;
+                let y = 44;
+                let lastClosingBaseline = y;
+
+                function renderClosingParagraph(tokens, lineHeight) {
+                    let curX = startX;
+                    const spaceWidth = 10;
+
+                    const words = [];
+                    tokens.forEach(tok => {
+                        const rawWords = tok.text.split(' ');
+                        rawWords.forEach((w) => {
+                            if (w.length > 0) {
+                                words.push({
+                                    text: w,
+                                    color: tok.color || '#2a2a2a',
+                                    bold: !!tok.bold
+                                });
+                            }
+                        });
+                    });
+
+                    words.forEach(w => {
+                        ctx.font = (w.bold ? '700 ' : '500 ') + '40px "Khand", "Trebuchet MS", sans-serif';
+                        const wordWidth = ctx.measureText(w.text).width;
+
+                        if (curX + wordWidth > startX + maxWidth) {
+                            curX = startX;
+                            y += lineHeight;
+                        }
+
+                        ctx.fillStyle = w.color;
+                        ctx.fillText(w.text, curX, y);
+                        curX += wordWidth + spaceWidth;
+                        lastClosingBaseline = y;
+                    });
+
+                    y += lineHeight;
+                }
+
+                const closingTokens = [
+                    { text: "It was an honour having you. We look forward to welcoming you again next year!" }
+                ];
+                renderClosingParagraph(closingTokens, 56);
+
+                const finalHeight = Math.ceil(lastClosingBaseline + 14);
+                const trimmedCanvas = document.createElement('canvas');
+                trimmedCanvas.width = canvas.width;
+                trimmedCanvas.height = finalHeight;
+                const tCtx = trimmedCanvas.getContext('2d');
+                tCtx.drawImage(canvas, 0, 0);
+
+                document.getElementById('canvases').appendChild(trimmedCanvas);
+                results['saavan26_cert_guest_closing.png'] = trimmedCanvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 5: Help Box Header & Description (Card Top) ──
+            {
+                const W = 1080;
+                const H = 160;
+                const canvas = document.createElement('canvas');
+                canvas.width = W;
+                canvas.height = H;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, W, H);
+
+                const r = 12;
+                // Draw rounded top card background
+                ctx.beginPath();
+                ctx.moveTo(0, H);
+                ctx.lineTo(0, r);
+                ctx.quadraticCurveTo(0, 0, r, 0);
+                ctx.lineTo(W - r, 0);
+                ctx.quadraticCurveTo(W, 0, W, r);
+                ctx.lineTo(W, H);
+                ctx.closePath();
+                ctx.fillStyle = '#FFF2D6';
+                ctx.fill();
+
+                // Left crimson border
+                ctx.fillStyle = '#B10822';
+                ctx.beginPath();
+                ctx.moveTo(0, H);
+                ctx.lineTo(0, r);
+                ctx.quadraticCurveTo(0, 0, r, 0);
+                ctx.lineTo(8, 0);
+                ctx.lineTo(8, H);
+                ctx.closePath();
+                ctx.fill();
+
+                // Title
+                ctx.font = '700 30px "Khand", "Trebuchet MS", sans-serif';
+                ctx.letterSpacing = '1px';
+                ctx.fillStyle = '#B10822';
+                ctx.fillText("NEED HELP OR NOTICE A DISCREPANCY?", 36, 52);
+
+                // Intro text
+                ctx.font = '500 27px "Khand", "Trebuchet MS", sans-serif';
+                ctx.letterSpacing = '0.3px';
+                ctx.fillStyle = '#444444';
+                ctx.fillText("If there are any typographical errors (e.g., spelling of your name or event details) in your certificate:", 36, 108);
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_cert_help_header.png'] = canvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 6: Help Box Row 1 (Card Middle - Correction Form Link) ──
+            {
+                const W = 1080;
+                const H = 56;
+                const canvas = document.createElement('canvas');
+                canvas.width = W;
+                canvas.height = H;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, W, H);
+
+                // Fill card background
+                ctx.fillStyle = '#FFF2D6';
+                ctx.fillRect(0, 0, W, H);
+
+                // Left crimson border
+                ctx.fillStyle = '#B10822';
+                ctx.fillRect(0, 0, 8, H);
+
+                let curX = 36;
+                const baselineY = 38;
+
+                // Bullet
+                ctx.font = '700 30px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#B10822';
+                ctx.fillText("• ", curX, baselineY);
+                curX += ctx.measureText("• ").width + 4;
+
+                // Label
+                ctx.font = '600 27px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#2a2a2a';
+                ctx.fillText("Fill out the Google Form: ", curX, baselineY);
+                curX += ctx.measureText("Fill out the Google Form: ").width + 2;
+
+                // Link
+                ctx.font = '700 27px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#007AE3';
+                const linkText = "Click here to report a discrepancy";
+                ctx.fillText(linkText, curX, baselineY);
+                const linkWidth = ctx.measureText(linkText).width;
+
+                // Underline
+                ctx.strokeStyle = '#007AE3';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(curX, baselineY + 4);
+                ctx.lineTo(curX + linkWidth, baselineY + 4);
+                ctx.stroke();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_cert_help_row1.png'] = canvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 7: Help Box Row 2 (Card Bottom - Email Support Link) ──
+            {
+                const W = 1080;
+                const H = 76;
+                const canvas = document.createElement('canvas');
+                canvas.width = W;
+                canvas.height = H;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, W, H);
+
+                const r = 12;
+                // Draw rounded bottom card background
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(W, 0);
+                ctx.lineTo(W, H - r);
+                ctx.quadraticCurveTo(W, H, W - r, H);
+                ctx.lineTo(r, H);
+                ctx.quadraticCurveTo(0, H, 0, H - r);
+                ctx.closePath();
+                ctx.fillStyle = '#FFF2D6';
+                ctx.fill();
+
+                // Left crimson border
+                ctx.fillStyle = '#B10822';
+                ctx.beginPath();
+                ctx.moveTo(0, 0);
+                ctx.lineTo(8, 0);
+                ctx.lineTo(8, H);
+                ctx.lineTo(r, H);
+                ctx.quadraticCurveTo(0, H, 0, H - r);
+                ctx.closePath();
+                ctx.fill();
+
+                let curX = 36;
+                const baselineY = 38;
+
+                // Bullet
+                ctx.font = '700 30px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#B10822';
+                ctx.fillText("• ", curX, baselineY);
+                curX += ctx.measureText("• ").width + 4;
+
+                // Label
+                ctx.font = '600 27px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#2a2a2a';
+                ctx.fillText("Email us at: ", curX, baselineY);
+                curX += ctx.measureText("Email us at: ").width + 2;
+
+                // Link
+                ctx.font = '700 27px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#007AE3';
+                const linkText = "support@iitmparadox.org";
+                ctx.fillText(linkText, curX, baselineY);
+                const linkWidth = ctx.measureText(linkText).width;
+
+                // Underline
+                ctx.strokeStyle = '#007AE3';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(curX, baselineY + 4);
+                ctx.lineTo(curX + linkWidth, baselineY + 4);
+                ctx.stroke();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_cert_help_row2.png'] = canvas.toDataURL('image/png');
+            }
+
+            // ── ASSET 8: Greetings Word Asset (100% Opaque Dark-Mode Immune) ──
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 300;
+                canvas.height = 100;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = '700 48px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#2B1E16';
+                ctx.textBaseline = 'alphabetic';
+                
+                const text = "Greetings,";
+                ctx.fillText(text, 10, 60);
+
+                // Auto-crop to exact pixel bounds (zero extra vertical/horizontal spacing)
+                const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const data = imgData.data;
+                let minX = canvas.width, minY = canvas.height, maxX = 0, maxY = 0;
+                for (let y = 0; y < canvas.height; y++) {
+                    for (let x = 0; x < canvas.width; x++) {
+                        const alpha = data[(y * canvas.width + x) * 4 + 3];
+                        if (alpha > 0) {
+                            if (x < minX) minX = x;
+                            if (x > maxX) maxX = x;
+                            if (y < minY) minY = y;
+                            if (y > maxY) maxY = y;
+                        }
+                    }
+                }
+
+                const trimW = maxX - minX + 1;
+                const trimH = maxY - minY + 1;
+                const trimmedCanvas = document.createElement('canvas');
+                trimmedCanvas.width = trimW;
+                trimmedCanvas.height = trimH;
+                const tCtx = trimmedCanvas.getContext('2d');
+                
+                // 100% Opaque parchment pattern background matching email body texture (parchment_warm_tile.png)
+                if (parchmentTileImg.complete && parchmentTileImg.naturalWidth > 0) {
+                    const pat = tCtx.createPattern(parchmentTileImg, 'repeat');
+                    tCtx.fillStyle = pat;
+                } else {
+                    tCtx.fillStyle = '#FFF6E5';
+                }
+                tCtx.fillRect(0, 0, trimW, trimH);
+                
+                tCtx.drawImage(canvas, minX, minY, trimW, trimH, 0, 0, trimW, trimH);
+
+                document.getElementById('canvases').appendChild(trimmedCanvas);
+                results['saavan26_cert_greetings.png'] = trimmedCanvas.toDataURL('image/png');
+            }
+
+            // Send to save server
+            status.innerText = 'Saving perfectly aligned certificate assets...';
+            try {
+                const response = await fetch('http://127.0.0.1:8765/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(results)
+                });
+                if (response.ok) {
+                    status.innerHTML = '<span style="color:#2CAE6E; font-weight:bold;">All assets aligned and saved successfully!</span>';
+                } else {
+                    status.innerHTML = '<span style="color:#FF5555;">Server error: ' + response.status + '</span>';
+                }
+            } catch (err) {
+                status.innerHTML = '<span style="color:#FF5555;">Fetch error: ' + err.message + '</span>';
+            }
+        }
+        window.onload = run;
+    </script>
+</body>
+</html>

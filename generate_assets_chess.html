@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Chess Asset Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Khand:wght@400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Samarkan';
+            src: url('https://db.onlinewebfonts.com/t/8107f8b787a40a84fbf3ee220abd84aa.woff2') format('woff2');
+        }
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background: #2b1708;
+            color: white;
+        }
+        canvas {
+            border: 1px solid #777;
+            margin: 10px;
+            background: #FFFDF5;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div style="position:absolute; left:-9999px; top:-9999px; visibility:hidden;">
+        <span style="font-family:'Khand'; font-weight:400;">Khand 400</span>
+        <span style="font-family:'Khand'; font-weight:500;">Khand 500</span>
+        <span style="font-family:'Khand'; font-weight:600;">Khand 600</span>
+        <span style="font-family:'Khand'; font-weight:700;">Khand 700</span>
+        <span style="font-family:'Libre Baskerville'; font-weight:400;">Libre 400</span>
+        <span style="font-family:'Libre Baskerville'; font-weight:700;">Libre 700</span>
+    </div>
+    <h2>Generating Sports & Chess assets...</h2>
+    <div id="status">Loading fonts & assets...</div>
+    <div id="canvases"></div>
+
+    <script>
+        async function run() {
+            const status = document.getElementById('status');
+            try {
+                const font = new FontFace('Samarkan', 'url(https://db.onlinewebfonts.com/t/8107f8b787a40a84fbf3ee220abd84aa.woff2)');
+                await Promise.race([font.load(), new Promise(r => setTimeout(r, 2000))]);
+                document.fonts.add(font);
+            } catch (e) {
+                console.warn('Samarkan load timeout/error', e);
+            }
+
+            await document.fonts.ready;
+            await Promise.all([
+                document.fonts.load('500 32px Khand'),
+                document.fonts.load('600 32px Khand'),
+                document.fonts.load('700 32px Khand'),
+                document.fonts.load('700 38px Khand'),
+                document.fonts.load('700 54px Khand'),
+                document.fonts.load('700 28px Khand'),
+                document.fonts.load('italic 500 25px Khand'),
+                document.fonts.load('700 27px Khand'),
+            ]);
+
+            status.innerText = 'Fonts loaded! Rendering canvases...';
+            const results = {};
+
+            // 1. Seamless Sports Cloth Texture Tile (64x64) - Velvet Bronze / Deep Warm Umber
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 64;
+                canvas.height = 64;
+                const ctx = canvas.getContext('2d');
+
+                // Base deep velvet sports bronze / warm chocolate umber
+                ctx.fillStyle = '#381E08';
+                ctx.fillRect(0, 0, 64, 64);
+
+                // Weave horizontal threads
+                for (let y = 0; y < 64; y += 4) {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+                    ctx.fillRect(0, y, 64, 1.5);
+                }
+                // Weave vertical threads
+                for (let x = 0; x < 64; x += 4) {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.14)';
+                    ctx.fillRect(x, 0, 1.5, 64);
+                }
+                // Diagonal bronze/gold twill
+                for (let d = -64; d < 128; d += 6) {
+                    ctx.strokeStyle = 'rgba(185, 138, 83, 0.28)'; // #B98A53
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.moveTo(d, 0);
+                    ctx.lineTo(d + 64, 64);
+                    ctx.stroke();
+
+                    ctx.strokeStyle = 'rgba(50, 20, 5, 0.22)';
+                    ctx.lineWidth = 1.2;
+                    ctx.beginPath();
+                    ctx.moveTo(d + 64, 0);
+                    ctx.lineTo(d, 64);
+                    ctx.stroke();
+                }
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['cloth_sports_tile.png'] = canvas.toDataURL('image/png');
+            }
+
+            // 2. Subtitle: RAPID CHESS LEAGUE • EXCLUSIVE GUEST SESSION
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1040;
+                canvas.height = 120;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const cx = canvas.width / 2;
+
+                // Eyebrow
+                ctx.font = '700 24px "Khand", "Trebuchet MS", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'alphabetic';
+                ctx.fillStyle = '#8A5016';
+                ctx.letterSpacing = '5px';
+                ctx.fillText('✦   DEPARTMENT OF SPORTS PRESENTS   ✦', cx, 36);
+
+                // Main headline
+                ctx.font = '700 46px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#6E0F1E'; // Deep royal burgundy
+                ctx.letterSpacing = '2.5px';
+                ctx.fillText('RAPID CHESS LEAGUE • LIVE INTERACTIVE SESSION', cx, 90);
+
+                // Decorative underline
+                ctx.beginPath();
+                ctx.moveTo(cx - 410, 108);
+                ctx.lineTo(cx + 410, 108);
+                ctx.strokeStyle = '#D4A017';
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_s_chess_subtitle.png'] = canvas.toDataURL('image/png');
+            }
+
+            // 3. Framed Poster for Rapid Chess League
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 540;
+                canvas.height = 720;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const posterImg = new Image();
+                posterImg.crossOrigin = 'anonymous';
+                posterImg.src = 'poster_chess.png';
+                await new Promise(resolve => {
+                    posterImg.onload = resolve;
+                    posterImg.onerror = resolve;
+                });
+
+                const frameX = 18;
+                const frameY = 14;
+                const frameW = 504;
+                const frameH = 688;
+                const frameRadius = 16;
+
+                // 1. Drop shadow
+                ctx.save();
+                ctx.shadowColor = 'rgba(38, 20, 5, 0.65)';
+                ctx.shadowBlur = 30;
+                ctx.shadowOffsetY = 14;
+                ctx.fillStyle = 'rgba(38, 20, 5, 0.4)';
+                ctx.beginPath();
+                ctx.roundRect(frameX, frameY, frameW, frameH, frameRadius);
+                ctx.fill();
+                ctx.restore();
+
+                // 2. Velvet Sports Bronze Background Matting
+                const mattingGrad = ctx.createRadialGradient(
+                    frameX + frameW / 2, frameY + frameH / 2, 40,
+                    frameX + frameW / 2, frameY + frameH / 2, frameW * 0.75
+                );
+                mattingGrad.addColorStop(0, '#B98A53');
+                mattingGrad.addColorStop(0.65, '#7A4E1B');
+                mattingGrad.addColorStop(1, '#2E1805');
+                ctx.fillStyle = mattingGrad;
+                ctx.beginPath();
+                ctx.roundRect(frameX, frameY, frameW, frameH, frameRadius);
+                ctx.fill();
+
+                // 3. Metallic Gold Outer Bevel Moulding
+                const outerGoldGrad = ctx.createLinearGradient(frameX, frameY, frameX + frameW, frameY + frameH);
+                outerGoldGrad.addColorStop(0.0, '#FFF6C2');
+                outerGoldGrad.addColorStop(0.18, '#D8A000');
+                outerGoldGrad.addColorStop(0.45, '#FFD54F');
+                outerGoldGrad.addColorStop(0.70, '#8A6000');
+                outerGoldGrad.addColorStop(0.88, '#FFDF73');
+                outerGoldGrad.addColorStop(1.0, '#C48E00');
+
+                ctx.strokeStyle = outerGoldGrad;
+                ctx.lineWidth = 5.5;
+                ctx.beginPath();
+                ctx.roundRect(frameX, frameY, frameW, frameH, frameRadius);
+                ctx.stroke();
+
+                // 4. Middle Dark Bronze Groove
+                ctx.strokeStyle = '#2E1805';
+                ctx.lineWidth = 1.8;
+                ctx.beginPath();
+                ctx.roundRect(frameX + 3.5, frameY + 3.5, frameW - 7, frameH - 7, frameRadius - 2);
+                ctx.stroke();
+
+                // 5. Draw Poster Inside
+                const innerPad = 12;
+                const innerX = frameX + innerPad;
+                const innerY = frameY + innerPad;
+                const innerW = frameW - innerPad * 2;
+                const innerH = frameH - innerPad * 2;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.roundRect(innerX, innerY, innerW, innerH, frameRadius - 4);
+                ctx.clip();
+                if (posterImg.width > 0) {
+                    ctx.drawImage(posterImg, innerX, innerY, innerW, innerH);
+                } else {
+                    ctx.fillStyle = '#FAF4E8';
+                    ctx.fillRect(innerX, innerY, innerW, innerH);
+                }
+                ctx.restore();
+
+                // Inner gold fillet border
+                ctx.strokeStyle = '#FFE082';
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+                ctx.roundRect(innerX, innerY, innerW, innerH, frameRadius - 4);
+                ctx.stroke();
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_s_chess_framed_poster.png'] = canvas.toDataURL('image/png');
+            }
+
+            // 3b. Sports Domain Ornamental Pillar (Transparent Retina 2x PNG)
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 100;
+                canvas.height = 680;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const cx = canvas.width / 2;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                // 1. Top Fleur-de-lis ⚜
+                ctx.font = '36px sans-serif';
+                ctx.fillStyle = '#4A230B';
+                ctx.fillText('⚜', cx, 40);
+
+                // 2. Top Vertical Gradient Line
+                const gradTop = ctx.createLinearGradient(0, 65, 0, 135);
+                gradTop.addColorStop(0, '#4A230B');
+                gradTop.addColorStop(1, 'rgba(74, 35, 11, 0.12)');
+                ctx.strokeStyle = gradTop;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(cx, 65);
+                ctx.lineTo(cx, 135);
+                ctx.stroke();
+
+                // 3. Top Star ✦
+                ctx.font = '28px sans-serif';
+                ctx.fillStyle = '#E2AA02';
+                ctx.fillText('✦', cx, 175);
+
+                // 4. Upper Motif ۞
+                ctx.font = '36px sans-serif';
+                ctx.fillStyle = '#7A0C1E';
+                ctx.fillText('۞', cx, 245);
+
+                // 5. Central Floral ✿
+                ctx.font = '34px sans-serif';
+                ctx.fillStyle = '#E2AA02';
+                ctx.fillText('✿', cx, 340);
+
+                // 6. Lower Motif ۞
+                ctx.font = '36px sans-serif';
+                ctx.fillStyle = '#7A0C1E';
+                ctx.fillText('۞', cx, 435);
+
+                // 7. Bottom Star ✦
+                ctx.font = '28px sans-serif';
+                ctx.fillStyle = '#E2AA02';
+                ctx.fillText('✦', cx, 505);
+
+                // 8. Bottom Vertical Gradient Line
+                const gradBottom = ctx.createLinearGradient(0, 615, 0, 545);
+                gradBottom.addColorStop(0, '#4A230B');
+                gradBottom.addColorStop(1, 'rgba(74, 35, 11, 0.12)');
+                ctx.strokeStyle = gradBottom;
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(cx, 545);
+                ctx.lineTo(cx, 615);
+                ctx.stroke();
+
+                // 9. Bottom Fleur-de-lis ⚜
+                ctx.font = '36px sans-serif';
+                ctx.fillStyle = '#4A230B';
+                ctx.fillText('⚜', cx, 640);
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_s_pillar.png'] = canvas.toDataURL('image/png');
+            }
+
+            // Function for rendering Speaker Card
+            function renderSpeakerCard(eyebrow, name, designation, bioParagraphs, filename) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1040;
+
+                const padX = 14;
+                const padY = 8;
+                const innerPadX = 46;
+                const cardW = canvas.width - padX * 2;
+                const innerContentW = cardW - innerPadX * 2 - 20;
+
+                // Setup test context for measurements with identical font and letterSpacing
+                const tCtx = canvas.getContext('2d');
+                tCtx.font = '400 26px "Khand", "Trebuchet MS", sans-serif';
+                tCtx.letterSpacing = '0.4px';
+
+                function wrapText(text, maxWidth) {
+                    const words = text.split(' ');
+                    const lines = [];
+                    let curLine = '';
+                    for (const w of words) {
+                        const testLine = curLine ? curLine + ' ' + w : w;
+                        if (tCtx.measureText(testLine).width > maxWidth && curLine) {
+                            lines.push(curLine);
+                            curLine = w;
+                        } else {
+                            curLine = testLine;
+                        }
+                    }
+                    if (curLine) lines.push(curLine);
+                    return lines;
+                }
+
+                let allLines = [];
+                bioParagraphs.forEach((p, idx) => {
+                    const wrapped = wrapText(p, innerContentW);
+                    allLines.push(...wrapped);
+                    if (idx < bioParagraphs.length - 1) {
+                        allLines.push({ isGap: true });
+                    }
+                });
+
+                const bioLineHeight = 36;
+                let calculatedBioH = 0;
+                allLines.forEach(l => {
+                    calculatedBioH += l.isGap ? 18 : bioLineHeight;
+                });
+
+                const headerH = 178; // eyebrow + name + designation + margins
+                const cardH = headerH + calculatedBioH + 46;
+                canvas.height = padY * 2 + cardH + 16;
+
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const cardX = padX;
+                const cardY = padY + 4;
+                const cardRadius = 16;
+
+                // 1. Drop Shadow
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.45)';
+                ctx.shadowBlur = 18;
+                ctx.shadowOffsetY = 8;
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                ctx.beginPath();
+                ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                ctx.fill();
+                ctx.restore();
+
+                // 2. Velvet Sports Bronze / Deep Burgundy Gradient
+                const bgGrad = ctx.createLinearGradient(cardX, cardY, cardX, cardY + cardH);
+                bgGrad.addColorStop(0, '#4A230B');
+                bgGrad.addColorStop(0.45, '#351604');
+                bgGrad.addColorStop(1, '#1F0B02');
+                ctx.fillStyle = bgGrad;
+                ctx.beginPath();
+                ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                ctx.fill();
+
+                // Subtle inner glow
+                const radGrad = ctx.createRadialGradient(cardX + cardW/2, cardY + 60, 20, cardX + cardW/2, cardY + 60, cardW * 0.7);
+                radGrad.addColorStop(0, 'rgba(185, 138, 83, 0.22)');
+                radGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+                ctx.fillStyle = radGrad;
+                ctx.beginPath();
+                ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                ctx.fill();
+
+                // 3. Metallic Gold Bezel Border
+                const goldGrad = ctx.createLinearGradient(cardX, cardY, cardX + cardW, cardY + cardH);
+                goldGrad.addColorStop(0, '#FFF5BA');
+                goldGrad.addColorStop(0.3, '#FFBF00');
+                goldGrad.addColorStop(0.7, '#B38300');
+                goldGrad.addColorStop(1, '#FFE082');
+                ctx.strokeStyle = goldGrad;
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                ctx.stroke();
+
+                // 4. Content Typography
+                let textY = cardY + 48;
+                const textX = cardX + innerPadX;
+
+                // Eyebrow Tag
+                ctx.font = '700 24px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#FFD54F';
+                ctx.letterSpacing = '3px';
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'alphabetic';
+                ctx.fillText(eyebrow, textX, textY);
+                textY += 48;
+
+                // Speaker Name
+                ctx.font = '700 46px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#FFFFFF';
+                ctx.letterSpacing = '2px';
+                ctx.fillText(name, textX, textY);
+                textY += 40;
+
+                // Subtitle / Designation
+                ctx.font = '600 27px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#FFE082';
+                ctx.letterSpacing = '0.8px';
+                ctx.fillText(designation, textX, textY);
+                textY += 44;
+
+                // Bio Paragraphs
+                ctx.font = '400 26px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#F5ECE3';
+                ctx.letterSpacing = '0.4px';
+                allLines.forEach(l => {
+                    if (l.isGap) {
+                        textY += 18;
+                    } else {
+                        ctx.fillText(l, textX, textY);
+                        textY += bioLineHeight;
+                    }
+                });
+
+                document.getElementById('canvases').appendChild(canvas);
+                results[filename] = canvas.toDataURL('image/png');
+            }
+
+            // 4. Apoorv Kamble Card
+            renderSpeakerCard(
+                '✦   DISTINGUISHED GUEST SPEAKER',
+                'Apoorv Kamble (IM)',
+                'FIDE International Master (2025)   |   Rising Indian Chess Prodigy',
+                [
+                    "International Master Apoorv Kamble is a rising Indian chess player from Bengaluru who earned the FIDE International Master title in 2025. He began his chess journey at the age of five and has gained nearly 600 FIDE rating points in less than three years.",
+                    "In 2025, he completed all three required IM norms, including a 6/9 performance at the Teplice Open, an unbeaten 7.5/9 tournament-winning performance at the Tamil Nadu IM Closed, and a 6.5/9 finish at the Chennai IM Norm Round Robin, where he placed second.",
+                    "Beyond his competitive achievements, Apoorv credits disciplined preparation, reading chess literature, and learning from setbacks as key elements of his development, making his journey from a five-year-old chess enthusiast to an International Master a testament to sustained dedication and continuous learning."
+                ],
+                'saavan26_s_speaker_apoorv.png'
+            );
+
+            // 5. Ajay Krishna S Card
+            renderSpeakerCard(
+                '✦   DISTINGUISHED GUEST SPEAKER',
+                'Ajay Krishna S (IM)',
+                'FIDE International Master (2021)   |   Peak FIDE Rating: 2401',
+                [
+                    "International Master Ajay Krishna S is an accomplished Indian chess player who was awarded the FIDE International Master title in 2021 and has achieved a peak FIDE rating of 2401.",
+                    "His competitive career includes winning the All India Inter-University Chess Championship in 2019, finishing runner-up in 2016, winning a Closed IM Norm Tournament, and emerging as the winner of the 60th National School Games, alongside runner-up finishes in the 57th and 58th editions.",
+                    "He has also competed against some of the strongest players in international chess, recording notable victories and draws against 2500+ rated opponents, including Grandmasters, at prestigious events such as the Abu Dhabi Masters and Riga Tech Open."
+                ],
+                'saavan26_s_speaker_ajay.png'
+            );
+
+            // 6. Interactive Session Highlights Card (Retina 2x PNG)
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1040;
+                canvas.height = 340;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const padX = 14;
+                const padY = 8;
+                const cardW = canvas.width - padX * 2;
+                const cardH = canvas.height - padY * 2 - 16;
+                const cardX = padX;
+                const cardY = padY + 4;
+                const cardRadius = 16;
+
+                // 1. Drop Shadow
+                ctx.save();
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.22)';
+                ctx.shadowBlur = 14;
+                ctx.shadowOffsetY = 6;
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+                ctx.beginPath();
+                ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                ctx.fill();
+                ctx.restore();
+
+                // 2. Warm Parchment Background Gradient
+                const bgGrad = ctx.createLinearGradient(cardX, cardY, cardX, cardY + cardH);
+                bgGrad.addColorStop(0, '#FFF6DB');
+                bgGrad.addColorStop(0.5, '#FFF0C2');
+                bgGrad.addColorStop(1, '#FFE9AB');
+                ctx.fillStyle = bgGrad;
+                ctx.beginPath();
+                ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                ctx.fill();
+
+                // 3. Metallic Gold Bezel Border
+                const goldGrad = ctx.createLinearGradient(cardX, cardY, cardX + cardW, cardY + cardH);
+                goldGrad.addColorStop(0, '#FFF5BA');
+                goldGrad.addColorStop(0.3, '#FFBF00');
+                goldGrad.addColorStop(0.7, '#B38300');
+                goldGrad.addColorStop(1, '#FFE082');
+                ctx.strokeStyle = goldGrad;
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                ctx.stroke();
+
+                // 4. Header Section
+                const centerX = cardX + cardW / 2;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'alphabetic';
+
+                ctx.font = '700 33px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#4A230B';
+                ctx.letterSpacing = '3px';
+                ctx.fillText('✦   LIVE INTERACTIVE GUEST SESSION   ✦', centerX, cardY + 48);
+
+                ctx.font = '600 25px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#7A0C1E';
+                ctx.letterSpacing = '1px';
+                ctx.fillText('Engage Directly with Two International Masters in a Single Exclusive Session', centerX, cardY + 84);
+
+                // Dashed Header Divider
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(122, 12, 30, 0.35)';
+                ctx.lineWidth = 2;
+                ctx.setLineDash([8, 6]);
+                ctx.moveTo(cardX + 36, cardY + 104);
+                ctx.lineTo(cardX + cardW - 36, cardY + 104);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // 3 Key Interactive Highlights (Formatted cleanly across 2 lines each)
+                const items = [
+                    {
+                        icon: '♚',
+                        title: 'Live Q&A with IM Apoorv & IM Ajay',
+                        desc: 'Ask your questions on rapid calculation, tournament mindset, opening prep, and rating growth.'
+                    },
+
+                    {
+                        icon: '♞',
+                        title: 'Interactive Learning & Experience Sharing',
+                        desc: 'Gain actionable guidance and competitive insights directly from two International Masters.'
+                    }
+                ];
+
+                let itemY = cardY + 148;
+                items.forEach(item => {
+                    // Line 1: Icon + Title
+                    ctx.textAlign = 'left';
+                    ctx.font = '28px sans-serif';
+                    ctx.fillStyle = '#7A0C1E';
+                    ctx.fillText(item.icon, cardX + 44, itemY);
+
+                    ctx.font = '700 28px "Khand", "Trebuchet MS", sans-serif';
+                    ctx.fillStyle = '#4A230B';
+                    ctx.letterSpacing = '0.8px';
+                    ctx.fillText(item.title, cardX + 80, itemY);
+
+                    // Line 2: Description indented
+                    ctx.font = '400 25px "Khand", "Trebuchet MS", sans-serif';
+                    ctx.fillStyle = '#2A2A2A';
+                    ctx.letterSpacing = '0.3px';
+                    ctx.fillText(item.desc, cardX + 80, itemY + 34);
+
+                    itemY += 82;
+                });
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_s_interactive_card.png'] = canvas.toDataURL('image/png');
+            }
+
+            // 7. Official Session Date Badge (Transparent Retina 2x PNG - Generous Blank Spacing)
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 1040;
+                canvas.height = 230;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const cx = canvas.width / 2;
+
+                // Eyebrow Tag
+                ctx.font = '700 24px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#7A0C1E';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'alphabetic';
+                ctx.letterSpacing = '4px';
+                ctx.fillText('✦   SESSION DATE & TIMINGS   ✦', cx, 42);
+
+                // Main Big Date & Time
+                ctx.font = '700 52px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#4A230B';
+                ctx.letterSpacing = '2px';
+                ctx.fillText('26th Sept (Today)   •   02:00 PM Onwards', cx, 118);
+
+                // Decorative Center Divider
+                ctx.beginPath();
+                ctx.strokeStyle = '#D4A017';
+                ctx.lineWidth = 2.2;
+                ctx.moveTo(cx - 360, 150);
+                ctx.lineTo(cx + 360, 150);
+                ctx.stroke();
+
+                // Subtitle: Platform
+                ctx.font = '600 24px "Khand", "Trebuchet MS", sans-serif';
+                ctx.fillStyle = '#8A5016';
+                ctx.letterSpacing = '3.5px';
+                ctx.fillText('LIVE ON GOOGLE MEET   •   WATCH ON YOUTUBE', cx, 196);
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['saavan26_s_chess_date_badge.png'] = canvas.toDataURL('image/png');
+            }
+
+            // 8. Team Paradox Signoff Bronze
+            {
+                const canvas = document.createElement('canvas');
+                canvas.width = 440;
+                canvas.height = 88;
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                ctx.font = '700 46px "Khand", "Trebuchet MS", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.letterSpacing = '4px';
+                ctx.fillStyle = '#7A4E1B'; // Rich sports bronze
+                ctx.fillText('TEAM PARADOX', canvas.width / 2, canvas.height / 2);
+
+                document.getElementById('canvases').appendChild(canvas);
+                results['team_paradox_signoff_bronze.png'] = canvas.toDataURL('image/png');
+            }
+
+            window.GENERATED_ASSETS = results;
+            const endpoint = window.location.protocol.startsWith('http') ? '/save' : 'http://127.0.0.1:8765/save';
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(results)
+                });
+                console.log('Saved to server:', res.status);
+            } catch (e) {
+                console.error('Fetch error:', e);
+            }
+            status.innerText = 'All Sports & Chess Assets Generated!';
+        }
+        window.onload = run;
+    </script>
+</body>
+</html>

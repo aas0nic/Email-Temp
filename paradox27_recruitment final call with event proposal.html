@@ -52,7 +52,7 @@
             margin: 0 !important;
             padding: 0 !important;
             width: 100% !important;
-            background-color: #0B1120;
+            background-color: #0B0F19;
             font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             color: #334155;
             -webkit-font-smoothing: antialiased;
@@ -77,35 +77,51 @@
         }
 
         /* Hover Transitions */
+        .btn-submit-proposal {
+            background-color: #D97706 !important;
+            background-image: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+            color: #FFFFFF !important;
+            -webkit-text-fill-color: #FFFFFF !important;
+            border: 1.5px solid #B45309 !important;
+            box-shadow: 0 2px 6px rgba(217, 119, 6, 0.28) !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .btn-submit-proposal:hover {
+            background-color: #B45309 !important;
+            border-color: #92400E !important;
+            box-shadow: 0 4px 12px rgba(217, 119, 6, 0.38) !important;
+        }
+
         .btn-view-roles {
-            background-color: #F0F9FF !important;
-            color: #0284C7 !important;
-            border: 1.5px solid #0284C7 !important;
-            box-shadow: 0 1px 3px rgba(2, 132, 199, 0.08) !important;
+            background-color: #EEF2FF !important;
+            color: #4338CA !important;
+            border: 1.5px solid #4338CA !important;
+            box-shadow: 0 1px 3px rgba(67, 56, 202, 0.08) !important;
             transition: all 0.2s ease !important;
         }
 
         .btn-view-roles:hover {
-            background-color: #E0F2FE !important;
-            color: #0369A1 !important;
-            border-color: #0369A1 !important;
-            box-shadow: 0 3px 10px rgba(2, 132, 199, 0.18) !important;
+            background-color: #E0E7FF !important;
+            color: #3730A3 !important;
+            border-color: #3730A3 !important;
+            box-shadow: 0 3px 10px rgba(67, 56, 202, 0.18) !important;
         }
 
         .btn-apply-now {
-            background-color: #0284C7 !important;
-            background-image: linear-gradient(135deg, #0284C7 0%, #0369A1 100%) !important;
+            background-color: #4338CA !important;
+            background-image: linear-gradient(135deg, #4F46E5 0%, #3730A3 100%) !important;
             color: #FFFFFF !important;
             -webkit-text-fill-color: #FFFFFF !important;
-            border: 1.5px solid #0284C7 !important;
-            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.22) !important;
+            border: 1.5px solid #4338CA !important;
+            box-shadow: 0 2px 6px rgba(67, 56, 202, 0.25) !important;
             transition: all 0.2s ease !important;
         }
 
         .btn-apply-now:hover {
-            background-color: #0369A1 !important;
-            border-color: #0369A1 !important;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.32) !important;
+            background-color: #3730A3 !important;
+            border-color: #312E81 !important;
+            box-shadow: 0 4px 12px rgba(67, 56, 202, 0.35) !important;
         }
 
         .social-icon-btn {
@@ -121,7 +137,7 @@
         /* Dark Mode Overrides */
         @media (prefers-color-scheme: dark) {
             .body-bg {
-                background-color: #0B1120 !important;
+                background-color: #0B0F19 !important;
             }
 
             .content-card-bg {
@@ -194,14 +210,14 @@
     </style>
 </head>
 
-<body bgcolor="#0B1120" class="body-bg"
-    style="margin: 0; padding: 0; background-color: #0B1120; -webkit-font-smoothing: antialiased;">
+<body bgcolor="#0B0F19" class="body-bg"
+    style="margin: 0; padding: 0; background-color: #0B0F19; -webkit-font-smoothing: antialiased;">
 
     <!-- ════════════════════════════════════
          PREHEADER (hidden preview text)
     ════════════════════════════════════ -->
     <div
-        style="display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #0B1120; opacity: 0;">
+        style="display: none; max-height: 0px; overflow: hidden; font-size: 1px; line-height: 1px; color: #0B0F19; opacity: 0;">
         Margazhi '27 Event Proposals are officially open! Submit your event proposals by 31st October. Paradox '27 team recruitment is also closing soon.
         &zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
     </div>
@@ -209,8 +225,8 @@
     <!-- ════════════════════════════════════
          OUTER WRAPPER TABLE
     ════════════════════════════════════ -->
-    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#0B1120" class="body-bg"
-        style="background-color: #0B1120; margin: 0; padding: 0;">
+    <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#0B0F19" class="body-bg"
+        style="background-color: #0B0F19; margin: 0; padding: 0;">
         <tr>
             <td align="center" class="outer-pad" style="padding: 10px 8px;">
 
@@ -224,12 +240,12 @@
                      ║  POSTER FRAME — 3 Concentric Rounded Layers          ║
                      ╚══════════════════════════════════════════════════════╝ -->
 
-                <!-- FRAME 1: Deep Sky Blue Outer Ring (Radius: 10px) -->
+                <!-- FRAME 1: Royal Indigo Outer Ring (Radius: 10px) -->
                 <table role="presentation" class="main-card" border="0" cellpadding="0" cellspacing="0" width="600"
-                    bgcolor="#0284C7"
-                    style="max-width: 600px; width: 100%; background-color: #0284C7; border-radius: 10px; box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 4px 16px rgba(2, 132, 199, 0.25); overflow: hidden; border-collapse: separate !important;">
+                    bgcolor="#312E81"
+                    style="max-width: 600px; width: 100%; background-color: #312E81; border-radius: 10px; box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55), 0 4px 16px rgba(49, 46, 129, 0.35); overflow: hidden; border-collapse: separate !important;">
                     <tr>
-                        <td style="padding: 4px;" bgcolor="#0284C7">
+                        <td style="padding: 4px;" bgcolor="#312E81">
 
                             <!-- FRAME 2: Dark Navy Inner Ring (Radius: 6px = 10px - 4px) -->
                             <table role="presentation" width="100%" border="0" cellpadding="0" cellspacing="0"
@@ -247,14 +263,14 @@
                                                  │   TOP IDENTITY HEADER BAR             │
                                                  └──────────────────────────────────────┘ -->
                                             <tr>
-                                                <td align="center" bgcolor="#0369A1"
-                                                    style="background-color: #0369A1; background-image: linear-gradient(90deg, #075985 0%, #0284C7 50%, #075985 100%); padding: 6px 14px; border-bottom: 1.5px solid rgba(56, 189, 248, 0.6);">
+                                                <td align="center" bgcolor="#1E1B4B"
+                                                    style="background-color: #1E1B4B; background-image: linear-gradient(90deg, #1E1B4B 0%, #312E81 50%, #1E1B4B 100%); padding: 6px 14px;">
                                                     <table role="presentation" border="0" cellpadding="0"
                                                         cellspacing="0" align="center">
                                                         <tr>
                                                             <td style="vertical-align: middle; line-height: 1;">
                                                                 <span
-                                                                    style="font-family: 'Space Grotesk', -apple-system, sans-serif; color: #FFFFFF; font-size: 9.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">
+                                                                    style="font-family: 'Space Grotesk', -apple-system, sans-serif; color: #FFFFFF; font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;">
                                                                     ✦ &nbsp; Team Paradox &bull; IIT Madras &nbsp; ✦
                                                                 </span>
                                                             </td>    
@@ -267,12 +283,12 @@
                                                  │   HERO BANNER                         │
                                                  └──────────────────────────────────────┘ -->
                                             <tr>
-                                                <td align="center" bgcolor="#38BDF8"
-                                                    style="background-color: #38BDF8; font-size: 0; line-height: 0; padding: 0;">
+                                                <td align="center" bgcolor="#FAF6E9"
+                                                    style="background-color: #FAF6E9; font-size: 0; line-height: 0; padding: 0;">
                                                     <a href="https://iitmparadox.org" target="_blank"
                                                         style="display: block; text-decoration: none;">
-                                                        <img src="https://res.cloudinary.com/mtvyoxua/image/upload/v1791442760/recruitment.png"
-                                                            alt="Paradox '27 — We Are Recruiting!" width="586"
+                                                        <img src="https://res.cloudinary.com/mtvyoxua/image/upload/v1792421265/Header.png"
+                                                            alt="Margazhi '27 — IIT Madras" width="586"
                                                             height="147"
                                                             style="display: block; width: 100%; max-width: 586px; height: auto; border: 0; outline: none; text-decoration: none;" />
                                                     </a>
@@ -283,11 +299,11 @@
                                                  │   RECRUITMENT SUB-RIBBON              │
                                                  └──────────────────────────────────────┘ -->
                                             <tr>
-                                                <td align="center" bgcolor="#0369A1"
-                                                    style="background-color: #0369A1; background-image: linear-gradient(90deg, #075985 0%, #0284C7 50%, #075985 100%); padding: 5px 12px; border-bottom: 1px solid #0284C7;">
+                                                <td align="center" bgcolor="#1E1B4B"
+                                                    style="background-color: #1E1B4B; background-image: linear-gradient(90deg, #78350F 0%, #B45309 30%, #3730A3 70%, #1E1B4B 100%); padding: 5px 12px;">
                                                     <span
-                                                        style="font-family: 'Space Grotesk', -apple-system, sans-serif; color: #FFFFFF; font-size: 8.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; text-shadow: 0 1px 2px rgba(0,0,0,0.25);">
-                                                        ✦ &nbsp; Margazhi '27 Event Proposals &bull; Paradox '27 Recruitment &nbsp; ✦
+                                                        style="font-family: 'Space Grotesk', -apple-system, sans-serif; color: #FFFFFF; font-size: 8px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; text-shadow: 0 1px 2px rgba(0,0,0,0.25);">
+                                                        ✦ &nbsp; Margazhi '27 Events x Paradox '27 Recruitment &nbsp; ✦
                                                     </span>
                                                 </td>
                                             </tr>
@@ -310,7 +326,7 @@
                                                          ══════════════════════════════════════════════════════ -->
                                                     <p class="body-text t-slate-body"
                                                         style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; line-height: 26px; color: #334155; margin: 0 0 16px 0; font-weight: 400;">
-                                                        We are thrilled to officially announce the opening of <strong>Event Proposals for Margazhi '27</strong>, the grand winter festival of the IIT Madras BS Degree Program!
+                                                        We are thrilled to officially announce the opening of <strong>Event Proposals for Margazhi '27</strong>, the online festival of the IIT Madras BS Degree Program!
                                                     </p>
 
                                                     <p class="body-text t-slate-body"
@@ -324,17 +340,17 @@
                                                         style="margin: 0 0 22px 0; border-collapse: separate !important; border-radius: 10px; overflow: hidden;">
                                                         <tr>
                                                             <td class="roles-card"
-                                                                style="background-color: #F8FAFC; background-image: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); border: 1px solid #E2E8F0; border-radius: 10px; padding: 12px 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+                                                                style="background-color: #FFFDF7; background-image: linear-gradient(180deg, #FFFFFF 0%, #FFFDF5 100%); border: 1px solid #FDE68A; border-radius: 10px; padding: 12px 18px; box-shadow: 0 2px 6px rgba(217, 119, 6, 0.06);">
 
                                                                 <!-- Card Heading -->
                                                                 <p
-                                                                    style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 700; color: #0F172A; line-height: 20px; margin: 0 0 4px 0;">
+                                                                    style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 700; color: #78350F; line-height: 20px; margin: 0 0 4px 0;">
                                                                     Pitch Your Event Idea
                                                                 </p>
 
                                                                 <!-- Card Description -->
                                                                 <p
-                                                                    style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; line-height: 20px; color: #475569; margin: 0; font-weight: 400;">
+                                                                    style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; line-height: 20px; color: #92400E; margin: 0; font-weight: 400;">
                                                                     Submit your detailed proposal with your event format, round rules, timeline, and requirements. Selected proposals will receive guidance.
                                                                 </p>
 
@@ -350,11 +366,11 @@
                                                                 <table role="presentation" border="0" cellpadding="0"
                                                                     cellspacing="0" align="center" style="border-collapse: separate !important;">
                                                                     <tr>
-                                                                        <td align="center" valign="middle" bgcolor="#0284C7"
-                                                                            style="border-radius: 9999px; background-color: #0284C7; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.22); padding: 0;">
+                                                                        <td align="center" valign="middle" bgcolor="#D97706"
+                                                                            style="border-radius: 9999px; background-color: #D97706; box-shadow: 0 2px 8px rgba(217, 119, 6, 0.28); padding: 0;">
                                                                             <a href="https://iitmparadox.org/events/propose"
-                                                                                class="btn-apply-now btn-link" target="_blank"
-                                                                                style="display: inline-block; min-width: 165px; padding: 10px 22px; font-family: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; font-weight: 700; color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; text-decoration: none; border-radius: 9999px; letter-spacing: 0.3px; text-align: center; box-sizing: border-box; background-color: #0284C7; border: 1.5px solid #0284C7;">
+                                                                                class="btn-submit-proposal btn-link" target="_blank"
+                                                                                style="display: inline-block; min-width: 165px; padding: 10px 22px; font-family: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; font-weight: 700; color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; text-decoration: none; border-radius: 9999px; letter-spacing: 0.3px; text-align: center; box-sizing: border-box; background-color: #D97706; border: 1.5px solid #B45309;">
                                                                                 Submit Event Proposal
                                                                             </a>
                                                                         </td>
@@ -397,17 +413,17 @@
                                                         style="margin: 0 0 20px 0; border-collapse: separate !important; border-radius: 10px; overflow: hidden;">
                                                         <tr>
                                                             <td class="roles-card"
-                                                                style="background-color: #F8FAFC; background-image: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%); border: 1px solid #E2E8F0; border-radius: 10px; padding: 12px 18px; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);">
+                                                                style="background-color: #F8FAFC; background-image: linear-gradient(180deg, #FFFFFF 0%, #F5F7FF 100%); border: 1px solid #E0E7FF; border-radius: 10px; padding: 12px 18px; box-shadow: 0 2px 6px rgba(67, 56, 202, 0.05);">
 
                                                                 <!-- Card Heading -->
                                                                 <p
-                                                                    style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 700; color: #0F172A; line-height: 20px; margin: 0 0 4px 0;">
+                                                                    style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; font-weight: 700; color: #1E1B4B; line-height: 20px; margin: 0 0 4px 0;">
                                                                     Roles &amp; Responsibilities
                                                                 </p>
 
                                                                 <!-- Card Description -->
                                                                 <p
-                                                                    style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; line-height: 20px; color: #475569; margin: 0; font-weight: 400;">
+                                                                    style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; line-height: 20px; color: #4338CA; margin: 0; font-weight: 400;">
                                                                     Check out the detailed role descriptions and requirements across all departments before submitting your application.
                                                                 </p>
 
@@ -425,11 +441,11 @@
                                                                 <table role="presentation" border="0" cellpadding="0"
                                                                     cellspacing="0" align="center" style="border-collapse: separate !important;">
                                                                     <tr>
-                                                                        <td align="center" valign="middle" bgcolor="#F0F9FF"
-                                                                            style="border-radius: 9999px; background-color: #F0F9FF; padding: 0;">
+                                                                        <td align="center" valign="middle" bgcolor="#EEF2FF"
+                                                                            style="border-radius: 9999px; background-color: #EEF2FF; padding: 0;">
                                                                             <a href="https://docs.google.com/document/d/e/2PACX-1vTCFtzHo7lEMi7aZ__a5rajF_i26tJJY8lW-HY5qJkzftiyI3zwR_5cPiLbvzMckm1wqg-OkrUTuA33/pub"
                                                                                 class="btn-view-roles btn-link" target="_blank"
-                                                                                style="display: inline-block; width: 160px; padding: 11px 20px; font-family: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; font-weight: 700; color: #0284C7 !important; -webkit-text-fill-color: #0284C7 !important; text-decoration: none; border-radius: 9999px; letter-spacing: 0.3px; text-align: center; box-sizing: border-box; background-color: #F0F9FF; border: 1.5px solid #0284C7;">
+                                                                                style="display: inline-block; width: 160px; padding: 11px 20px; font-family: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; font-weight: 700; color: #4338CA !important; -webkit-text-fill-color: #4338CA !important; text-decoration: none; border-radius: 9999px; letter-spacing: 0.3px; text-align: center; box-sizing: border-box; background-color: #EEF2FF; border: 1.5px solid #4338CA;">
                                                                                 View Roles
                                                                             </a>
                                                                         </td>
@@ -443,11 +459,11 @@
                                                                 <table role="presentation" border="0" cellpadding="0"
                                                                     cellspacing="0" align="center" style="border-collapse: separate !important;">
                                                                     <tr>
-                                                                        <td align="center" valign="middle" bgcolor="#0284C7"
-                                                                            style="border-radius: 9999px; background-color: #0284C7; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.22); padding: 0;">
+                                                                        <td align="center" valign="middle" bgcolor="#4338CA"
+                                                                            style="border-radius: 9999px; background-color: #4338CA; box-shadow: 0 2px 8px rgba(67, 56, 202, 0.28); padding: 0;">
                                                                             <a href="https://iitmparadox.org/apply"
                                                                                 class="btn-apply-now btn-link" target="_blank"
-                                                                                style="display: inline-block; width: 160px; padding: 11px 20px; font-family: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; font-weight: 700; color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; text-decoration: none; border-radius: 9999px; letter-spacing: 0.3px; text-align: center; box-sizing: border-box; background-color: #0284C7; border: 1.5px solid #0284C7;">
+                                                                                style="display: inline-block; width: 160px; padding: 11px 20px; font-family: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; font-weight: 700; color: #FFFFFF !important; -webkit-text-fill-color: #FFFFFF !important; text-decoration: none; border-radius: 9999px; letter-spacing: 0.3px; text-align: center; box-sizing: border-box; background-color: #4338CA; border: 1.5px solid #4338CA;">
                                                                                 Apply Here
                                                                             </a>
                                                                         </td>
@@ -459,7 +475,7 @@
 
                                                     <!-- Application Deadline Caption -->
                                                     <p style="font-family: 'Space Grotesk', 'Plus Jakarta Sans', -apple-system, sans-serif; font-size: 10.5px; line-height: 16px; color: #DC2626; font-weight: 700; text-align: center; margin: 0 0 22px 0; letter-spacing: 0.2px;">
-                                                        ✦ &nbsp; Application Deadline: 21st October 2026 (Tomorrow) &nbsp; ✦
+                                                        ✦ &nbsp; Deadline: 21st October 2026 (Tomorrow) &nbsp; ✦
                                                     </p>
 
                                                     <!-- ══════════════════════════════════════════════════════
@@ -467,7 +483,7 @@
                                                          ══════════════════════════════════════════════════════ -->
                                                     <p class="body-text t-slate-body"
                                                         style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; line-height: 26px; color: #334155; margin: 0 0 16px 0; font-weight: 400;">
-                                                        Please note that you can either be a part of the organising team or an event team. Make sure to submit your applications or proposals before the respective deadlines to avoid any last-minute issues.
+                                                        <strong>Please note that you can either be part of the organising team or an event team.</strong> Make sure to submit your applications or proposals before the respective deadlines to avoid any last-minute issues.
                                                     </p>
 
                                                     <p class="body-text t-slate-body"
@@ -480,7 +496,7 @@
                                                         style="font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 13px; line-height: 23px; color: #475569; margin: 0 0 24px 0; font-weight: 400;">
                                                         For any queries or assistance, feel free to reach out to us at:
                                                         <a href="mailto:support@iitmparadox.org"
-                                                            style="color: #0284C7; font-weight: 600; text-decoration: underline;">
+                                                            style="color: #4338CA; font-weight: 600; text-decoration: underline;">
                                                             support@iitmparadox.org
                                                         </a>
                                                     </p>
@@ -510,7 +526,7 @@
                                                  └──────────────────────────────────────┘ -->
                                             <tr>
                                                 <td align="center" bgcolor="#0F172A"
-                                                    style="background-color: #0F172A; background-image: linear-gradient(180deg, #0F172A 0%, #090D16 100%); padding: 22px 16px 20px 16px; border-top: 3px solid #0284C7;">
+                                                    style="background-color: #0F172A; background-image: linear-gradient(180deg, #0F172A 0%, #090D16 100%); padding: 22px 16px 20px 16px; border-top: 3px solid #D97706;">
 
                                                     <!-- Circular Social Media Icon Buttons (Line / Outline Icons with Bulletproof Table Centering) -->
                                                     <table role="presentation" border="0" cellpadding="0"
